@@ -3,281 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiberiaClearLogistics | Professional Clearing & Forwarding Services</title>
-    <meta name="description" content="Liberia's premier customs clearing, freight forwarding, and logistics services. Experts in LRA regulations and Port of Monrovia procedures.">
-    
-    <!-- Font Awesome for Icons -->
+    <title>Client Portal - LiberiaClearLogistics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* All the CSS styles from the previous code go here */
-        /* [Include all the CSS styles from the previous response] */
+        :root {
+            --primary: #1a4f8c;
+            --primary-light: #2c6cb0;
+            --secondary: #e67e22;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --success: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
         
-        /* Basic CSS Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        /* Global Styles */
+        
         body {
-            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
             line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
+        
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
         .btn {
             display: inline-block;
             padding: 12px 30px;
-            background: #0056b3;
+            background: var(--secondary);
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: none;
             cursor: pointer;
             text-align: center;
         }
-
+        
         .btn:hover {
-            background: #003d82;
+            background: #d35400;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
-        /* ... [Include ALL the CSS styles from the previous response] ... */
         
+        .btn-primary {
+            background: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: #0d3c6c;
+        }
+        
+        .portal-section {
+            padding: 80px 0;
+        }
+        
+        .portal-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .portal-forms {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .portal-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .portal-tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .portal-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .portal-form {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .portal-form.active {
+            display: block;
+        }
+        
+        .portal-form h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 79, 140, 0.2);
+        }
+        
+        .services-section {
+            background: white;
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .portal-container {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header id="header">
+    <header>
         <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-ship"></i>
-                    LiberiaClearLogistics
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#tracking">Track Shipment</a></li>
-                    <li><a href="#calculator">Get Quote</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#documents">Documents</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#client-portal" class="client-portal-btn">Client Portal</a></li>
-                    
-                    <div class="social-links">
-                        <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://wa.me/231XXXXXXXXX" target="_blank" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </ul>
-            </nav>
+            <div class="header-content">
+                <div class="logo">Liberia<span>Clear</span>Logistics</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Track Shipment</a></li>
+                        <li><a href="#">Get Quote</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#" class="btn btn-primary">Client Portal</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Liberia's Premier Clearing & Forwarding Partner</h1>
-                <p>Expert customs brokerage and logistics solutions at the Freeport of Monrovia. Streamline your imports and exports with our local expertise in LRA regulations and port procedures.</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn">Get Free Consultation</a>
-                    <a href="#calculator" class="btn btn-success">Instant Quote</a>
-                    <a href="#tracking" class="btn btn-warning">Track Shipment</a>
-                </div>
-            </div>
+            <h1>Client Portal</h1>
+            <p>Access your shipment information, documents, and account details in one secure location</p>
+            <a href="#portal" class="btn">Login to Portal</a>
         </div>
     </section>
 
-    <!-- Quick Actions Section -->
-    <section class="quick-actions">
+    <section id="portal" class="portal-section">
         <div class="container">
-            <h2>Quick Actions</h2>
-            <div class="action-cards">
-                <div class="action-card">
-                    <i class="fas fa-ship"></i>
-                    <h3>Track Your Shipment</h3>
-                    <p>Real-time tracking for all your shipments with live updates from Freeport of Monrovia</p>
-                    <a href="#tracking" class="btn">Track Now</a>
-                </div>
-                <div class="action-card">
-                    <i class="fas fa-calculator"></i>
-                    <h3>Instant Quote</h3>
-                    <p>Get immediate pricing for your shipment with our advanced calculation system</p>
-                    <a href="#calculator" class="btn">Calculate</a>
-                </div>
-                <div class="action-card">
-                    <i class="fas fa-user-lock"></i>
-                    <h3>Client Portal</h3>
-                    <p>Access your documents, shipment history, and communicate with your agent</p>
-                    <a href="#client-portal" class="btn">Login</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Live Shipment Tracking -->
-    <section id="tracking" class="tracking">
-        <div class="container">
-            <h2>Live Shipment Tracking</h2>
-            <div class="tracking-container">
-                <div class="tracking-input">
-                    <input type="text" id="trackingNumber" placeholder="Enter your tracking number (e.g., LCL-2024-001)" required>
-                    <button class="btn" onclick="trackShipment()">Track Shipment</button>
-                </div>
-                <div id="trackingResults" class="tracking-results">
-                    <h3>Shipment Status: <span id="status" style="color: #28a745;">In Transit</span></h3>
-                    <div class="tracking-timeline">
-                        <!-- Timeline will be populated by JavaScript -->
-                    </div>
-                    <div class="shipment-details">
-                        <h4>Shipment Details</h4>
-                        <div class="detail-grid">
-                            <div class="detail-item">
-                                <span class="detail-label">Tracking Number</span>
-                                <span class="detail-value" id="displayTrackingNumber">LCL-2024-001</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Origin</span>
-                                <span class="detail-value" id="originPort">Antwerp, Belgium</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Destination</span>
-                                <span class="detail-value" id="destinationPort">Monrovia, Liberia</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">ETA</span>
-                                <span class="detail-value" id="etaDate">Loading...</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Carrier</span>
-                                <span class="detail-value" id="carrierName">Maersk Line</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Last Update</span>
-                                <span class="detail-value" id="lastUpdate">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Instant Quote Calculator -->
-    <section id="calculator" class="calculator">
-        <div class="container">
-            <h2>Instant Quote Calculator</h2>
-            <div class="calculator-container">
-                <form id="quoteForm" class="calculator-form">
-                    <select id="serviceType" required>
-                        <option value="">Select Service Type</option>
-                        <option value="clearing">Customs Clearing Only</option>
-                        <option value="sea_freight">Sea Freight + Clearing</option>
-                        <option value="air_freight">Air Freight + Clearing</option>
-                        <option value="full_logistics">Full Logistics Service</option>
-                    </select>
-                    
-                    <select id="origin" required>
-                        <option value="">Origin Country</option>
-                        <option value="china">China</option>
-                        <option value="usa">United States</option>
-                        <option value="europe">Europe</option>
-                        <option value="uae">UAE</option>
-                        <option value="south_africa">South Africa</option>
-                        <option value="other">Other</option>
-                    </select>
-                    
-                    <select id="cargoType" required>
-                        <option value="">Cargo Type</option>
-                        <option value="general">General Merchandise</option>
-                        <option value="construction">Construction Materials</option>
-                        <option value="vehicles">Vehicles & Machinery</option>
-                        <option value="perishable">Perishable Goods</option>
-                        <option value="hazardous">Hazardous Materials</option>
-                    </select>
-                    
-                    <input type="number" id="weight" placeholder="Weight (kg)" min="1" step="0.1" required>
-                    
-                    <input type="number" id="volume" placeholder="Volume (m³)" step="0.1" min="0.1" required>
-                    
-                    <input type="number" id="value" placeholder="Cargo Value (USD)" min="1" required>
-                    
-                    <div class="full-width">
-                        <textarea id="cargoDescription" placeholder="Cargo Description (e.g., Construction equipment, consumer goods, etc.)" rows="3" required></textarea>
-                    </div>
-                </form>
-                
-                <button class="btn" onclick="calculateQuote()" style="width: 100%;">Calculate Quote</button>
-                
-                <div id="quoteResult" class="quote-result">
-                    <h3>Your Estimated Cost</h3>
-                    <div class="quote-amount">$<span id="calculatedAmount">0.00</span> USD</div>
-                    <p>This is an estimated quote. Final pricing may vary based on actual documentation and customs duties.</p>
-                    <button class="btn" style="background: #28a745; margin-top: 15px;" onclick="requestDetailedQuote()">Request Detailed Quote</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Client Login Portal -->
-    <section id="client-portal" class="login-portal">
-        <div class="container">
-            <h2>Client Portal</h2>
+            <h2 class="section-title">Client Portal</h2>
             <div class="portal-container">
-                <div class="portal-tabs">
-                    <button class="portal-tab active" onclick="showTab('login')">Login</button>
-                    <button class="portal-tab" onclick="showTab('register')">Register</button>
+                <div class="portal-forms">
+                    <div class="portal-tabs">
+                        <button class="portal-tab active" onclick="showTab('login')">Login</button>
+                        <button class="portal-tab" onclick="showTab('register')">Register</button>
+                    </div>
+                    
+                    <div id="loginForm" class="portal-form active">
+                        <h3>Client Login</h3>
+                        <form id="login">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Login to Portal</button>
+                            <p style="text-align: center; margin-top: 15px;"><a href="#" style="color: var(--primary);">Forgot Password?</a></p>
+                        </form>
+                    </div>
+                    
+                    <div id="registerForm" class="portal-form">
+                        <h3>New Client Registration</h3>
+                        <form id="register">
+                            <div class="form-group">
+                                <label for="company">Company Name</label>
+                                <input type="text" id="company" class="form-control" placeholder="Enter company name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-email">Email Address</label>
+                                <input type="email" id="reg-email" class="form-control" placeholder="Enter email address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-password">Password</label>
+                                <input type="password" id="reg-password" class="form-control" placeholder="Create a password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact">Contact Person (Optional)</label>
+                                <input type="text" id="contact" class="form-control" placeholder="Enter contact person name">
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Register Account</button>
+                        </form>
+                    </div>
                 </div>
                 
-                <div id="loginForm" class="portal-form active">
-                    <h3>Client Login</h3>
-                    <input type="email" id="loginEmail" placeholder="Email Address" required>
-                    <input type="password" id="loginPassword" placeholder="Password" required>
-                    <button class="btn" onclick="clientLogin()" style="width: 100%;">Login to Portal</button>
-                    <p style="text-align: center; margin-top: 15px;"><a href="#" style="color: #0056b3;">Forgot Password?</a></p>
-                </div>
-                
-                <div id="registerForm" class="portal-form">
-                    <h3>New Client Registration</h3>
-                    <input type="text" id="regCompany" placeholder="Company Name" required>
-                    <input type="email" id="regEmail" placeholder="Email Address" required>
-                    <input type="tel" id="regPhone" placeholder="Phone Number" required>
-                    <input type="password" id="regPassword" placeholder="Password" required>
-                    <input type="text" id="regContactPerson" placeholder="Contact Person (Optional)">
-                    <button class="btn" onclick="clientRegister()" style="width: 100%;">Register Account</button>
-                </div>
-                
-                <div id="portalDemo" style="display: none; text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
-                    <!-- Portal content will be populated by JavaScript -->
+                <div class="portal-info" style="flex: 1; min-width: 300px;">
+                    <div class="service-card">
+                        <h3>Portal Features</h3>
+                        <ul style="list-style: none; margin-top: 20px;">
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-ship" style="color: var(--primary); margin-right: 10px; margin-top: 3px;"></i>
+                                <span>Real-time shipment tracking and status updates</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-file-invoice" style="color: var(--primary); margin-right: 10px; margin-top: 3px;"></i>
+                                <span>Access to all shipping documents and invoices</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-chart-line" style="color: var(--primary); margin-right: 10px; margin-top: 3px;"></i>
+                                <span>Analytics and reporting on your shipping activities</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-comments" style="color: var(--primary); margin-right: 10px; margin-top: 3px;"></i>
+                                <span>Direct communication with your dedicated agent</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
+    <section class="services-section">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <i class="fas fa-passport"></i>
@@ -294,214 +455,25 @@
                     <h3>Port Agency Services</h3>
                     <p>Professional representation and coordination at Freeport of Monrovia and Roberts International Airport.</p>
                 </div>
-                <div class="service-card">
-                    <i class="fas fa-warehouse"></i>
-                    <h3>Warehousing & Distribution</h3>
-                    <p>Secure storage facilities and efficient last-mile delivery throughout Liberia.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-truck-loading"></i>
-                    <h3>Project Cargo Handling</h3>
-                    <p>Specialized handling of oversized and heavy-lift cargo for construction, mining, and NGO sectors.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Cargo Insurance</h3>
-                    <p>Comprehensive marine cargo insurance to protect your shipments.</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Documents Section -->
-    <section id="documents" class="documents">
-        <div class="container">
-            <h2>Required Documents Checklist</h2>
-            <div class="document-lists">
-                <div class="document-list">
-                    <h3>For Importers</h3>
-                    <ul>
-                        <li>Commercial Invoice</li>
-                        <li>Bill of Lading/Air Waybill</li>
-                        <li>Packing List</li>
-                        <li>Insurance Certificate</li>
-                        <li>Import Permit Declaration (IPD)</li>
-                        <li>Certificate of Origin</li>
-                        <li>Phytosanitary Certificate (if applicable)</li>
-                        <li>Tax Clearance Certificate</li>
-                        <li>Business Registration Documents</li>
-                    </ul>
-                </div>
-                <div class="document-list">
-                    <h3>For Exporters</h3>
-                    <ul>
-                        <li>Commercial Invoice</li>
-                        <li>Packing List</li>
-                        <li>Export License</li>
-                        <li>Certificate of Origin</li>
-                        <li>Bill of Lading</li>
-                        <li>Insurance Certificate</li>
-                        <li>Quality Certificates</li>
-                        <li>Export Declaration Form</li>
-                        <li>Shipping Instructions</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>Why Choose Us?</h2>
-            <div class="about-content">
-                <p>With years of experience navigating the complexities of Liberian customs and port procedures, we offer unparalleled local expertise and reliability. Our team understands the unique challenges of importing and exporting in Liberia.</p>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h3>Local Expertise</h3>
-                        <p>Deep knowledge of LRA regulations and port authorities in Liberia</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Fast Clearance</h3>
-                        <p>Efficient processing at Freeport of Monrovia and Roberts International Airport</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-headset"></i>
-                        <h3>24/7 Support</h3>
-                        <p>Round-the-clock customer service and shipment tracking</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Compliance Guarantee</h3>
-                        <p>Full compliance with Liberia Revenue Authority requirements</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Get In Touch</h3>
-                    <div class="contact-details">
-                        <div class="contact-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <strong>Address</strong><br>
-                                Freeport of Monrovia Area<br>
-                                Monrovia, Liberia
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <strong>Phone</strong><br>
-                                +231-88-123-4567<br>
-                                +231-77-987-6543
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fab fa-whatsapp"></i>
-                            <div>
-                                <strong>WhatsApp</strong><br>
-                                +231-88-123-4567
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <strong>Email</strong><br>
-                                info@liberiacclearlogistics.com<br>
-                                operations@liberiacclearlogistics.com
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <strong>Business Hours</strong><br>
-                                Mon-Fri: 7:00 AM - 7:00 PM<br>
-                                Sat: 8:00 AM - 2:00 PM
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="footer-social">
-                        <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://wa.me/231881234567" target="_blank" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send Us a Message</h3>
-                    <form id="contactForm">
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <input type="tel" placeholder="Your Phone" required>
-                        <select required>
-                            <option value="">Select Service Interested In</option>
-                            <option value="clearing">Customs Clearing</option>
-                            <option value="freight">Freight Forwarding</option>
-                            <option value="warehousing">Warehousing</option>
-                            <option value="consultation">Consultation</option>
-                            <option value="other">Other</option>
-                        </select>
-                        <textarea placeholder="Your Message" rows="5" required></textarea>
-                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>LiberiaClearLogistics</h3>
-                    <p>Your trusted partner for customs clearing, freight forwarding, and logistics solutions in Liberia. We simplify international trade with local expertise.</p>
-                    <div class="footer-social">
-                        <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://wa.me/231881234567" target="_blank" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
+                    <p>Your trusted partner for customs clearing, freight forwarding, and logistics solutions in Liberia.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="#tracking"><i class="fas fa-chevron-right"></i> Track Shipment</a></li>
-                        <li><a href="#calculator"><i class="fas fa-chevron-right"></i> Get Quote</a></li>
-                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Our Services</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Customs Clearing</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Freight Forwarding</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Port Agency</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Warehousing</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Project Cargo</a></li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Track Shipment</a></li>
+                        <li><a href="#">Get Quote</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -509,353 +481,48 @@
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-map-marker-alt"></i> Freeport of Monrovia Area</a></li>
                         <li><a href="tel:+231881234567"><i class="fas fa-phone"></i> +231-88-123-4567</a></li>
-                        <li><a href="https://wa.me/231881234567"><i class="fab fa-whatsapp"></i> +231-88-123-4567</a></li>
-                        <li><a href="mailto:info@liberiacclearlogistics.com"><i class="fas fa-envelope"></i> info@liberiacclearlogistics.com</a></li>
+                        <li><a href="mailto:info@liberiaclearlogistics.com"><i class="fas fa-envelope"></i> info@liberiaclearlogistics.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 LiberiaClearLogistics. All rights reserved. | Professional Clearing & Forwarding Services in Liberia</p>
-                <p style="margin-top: 10px; font-size: 0.9em;">Compliant with Liberia Revenue Authority (LRA) and National Port Authority regulations</p>
+                <p>&copy; 2024 LiberiaClearLogistics. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Live Chat Button -->
-    <a href="https://wa.me/231881234567?text=Hello!%20I%20need%20information%20about%20your%20clearing%20services" 
-       class="live-chat-btn" 
-       target="_blank"
-       title="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- JavaScript -->
     <script>
-        // API Base URL - Update this if your backend is on a different port
-        const API_BASE = 'http://localhost:5000/api';
-
-        // Track Shipment Function
-        async function trackShipment() {
-            const trackingNumber = document.getElementById('trackingNumber').value.trim();
-            const resultsDiv = document.getElementById('trackingResults');
-            
-            if (!trackingNumber) {
-                alert('Please enter a tracking number');
-                return;
-            }
-
-            try {
-                // Show loading state
-                const trackBtn = document.querySelector('.tracking-input .btn');
-                const originalText = trackBtn.innerHTML;
-                trackBtn.innerHTML = '<div class="loading"></div> Tracking...';
-                trackBtn.disabled = true;
-
-                const response = await fetch(`${API_BASE}/shipments/track/${trackingNumber}`);
-                const data = await response.json();
-                
-                // Restore button
-                trackBtn.innerHTML = originalText;
-                trackBtn.disabled = false;
-                
-                if (data.success) {
-                    displayTrackingResults(data.data);
-                    resultsDiv.style.display = 'block';
-                    resultsDiv.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    alert('Shipment not found. Please check your tracking number.');
-                }
-            } catch (error) {
-                console.error('Error tracking shipment:', error);
-                alert('Error tracking shipment. Please try again.');
-                
-                // Restore button in case of error
-                const trackBtn = document.querySelector('.tracking-input .btn');
-                trackBtn.innerHTML = 'Track Shipment';
-                trackBtn.disabled = false;
-            }
-        }
-
-        // Display Tracking Results
-        function displayTrackingResults(shipment) {
-            document.getElementById('displayTrackingNumber').textContent = shipment.trackingNumber;
-            document.getElementById('status').textContent = formatStatus(shipment.status);
-            document.getElementById('status').style.color = getStatusColor(shipment.status);
-            
-            // Update details
-            document.getElementById('originPort').textContent = shipment.origin?.port || 'Loading...';
-            document.getElementById('destinationPort').textContent = shipment.destination?.port || 'Loading...';
-            document.getElementById('etaDate').textContent = shipment.estimatedArrival ? 
-                new Date(shipment.estimatedArrival).toLocaleDateString() : 'Calculating...';
-            document.getElementById('carrierName').textContent = shipment.carrier?.name || 'Loading...';
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
-            
-            // Update timeline
-            const timeline = document.querySelector('.tracking-timeline');
-            timeline.innerHTML = '';
-            
-            if (shipment.timeline && shipment.timeline.length > 0) {
-                shipment.timeline.forEach(item => {
-                    const timelineItem = document.createElement('div');
-                    timelineItem.className = `timeline-item ${item.status === shipment.status ? 'current' : 'completed'}`;
-                    timelineItem.innerHTML = `
-                        <strong>${formatStatus(item.status)}</strong>
-                        <p>${item.location} - ${formatDate(item.timestamp)}</p>
-                        <small>${item.description}</small>
-                    `;
-                    timeline.appendChild(timelineItem);
-                });
-            } else {
-                timeline.innerHTML = '<p>No tracking information available yet.</p>';
-            }
-        }
-
-        // Calculate Quote Function
-        async function calculateQuote() {
-            const formData = {
-                serviceType: document.getElementById('serviceType').value,
-                origin: document.getElementById('origin').value,
-                cargoType: document.getElementById('cargoType').value,
-                weight: parseFloat(document.getElementById('weight').value),
-                volume: parseFloat(document.getElementById('volume').value),
-                value: parseFloat(document.getElementById('value').value),
-                description: document.getElementById('cargoDescription').value
-            };
-
-            // Validate required fields
-            if (!formData.serviceType || !formData.origin || !formData.cargoType || 
-                !formData.weight || !formData.volume) {
-                alert('Please fill all required fields');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/quotes/calculate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    displayQuoteResult(data.data);
-                } else {
-                    alert('Error calculating quote: ' + data.message);
-                }
-            } catch (error) {
-                console.error('Error calculating quote:', error);
-                alert('Error calculating quote. Please try again.');
-            }
-        }
-
-        // Display Quote Results
-        function displayQuoteResult(quoteData) {
-            document.getElementById('calculatedAmount').textContent = quoteData.calculatedAmount;
-            document.getElementById('quoteResult').style.display = 'block';
-            document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Request Detailed Quote
-        async function requestDetailedQuote() {
-            const quoteId = `QUOTE-${Date.now()}`;
-            const companyName = prompt('Enter your company name:');
-            const email = prompt('Enter your email:');
-            const phone = prompt('Enter your phone number:');
-            
-            if (!companyName || !email || !phone) {
-                alert('All fields are required for detailed quote.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/quotes/request-detailed`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        quoteId,
-                        companyName,
-                        email,
-                        phone,
-                        additionalNotes: 'Requested from website'
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(data.message);
-                    document.getElementById('quoteForm').reset();
-                    document.getElementById('quoteResult').style.display = 'none';
-                } else {
-                    alert('Error submitting request: ' + data.message);
-                }
-            } catch (error) {
-                console.error('Error requesting detailed quote:', error);
-                alert('Error submitting request. Please try again.');
-            }
-        }
-
-        // Client Registration
-        async function clientRegister() {
-            const companyName = document.getElementById('regCompany').value;
-            const email = document.getElementById('regEmail').value;
-            const phone = document.getElementById('regPhone').value;
-            const password = document.getElementById('regPassword').value;
-
-            if (!companyName || !email || !phone || !password) {
-                alert('Please fill all registration fields');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        companyName,
-                        email,
-                        phone,
-                        password,
-                        contactPerson: document.getElementById('regContactPerson')?.value || ''
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert('Registration successful! You can now login.');
-                    showTab('login');
-                    document.getElementById('registerForm').reset();
-                } else {
-                    alert('Registration failed: ' + data.message);
-                }
-            } catch (error) {
-                console.error('Error during registration:', error);
-                alert('Error during registration. Please try again.');
-            }
-        }
-
-        // Client Login
-        async function clientLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            if (!email || !password) {
-                alert('Please enter email and password');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/auth/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    // Store user data (in real app, use secure storage)
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    localStorage.setItem('token', data.token);
-                    
-                    showClientPortal(data.user);
-                } else {
-                    alert('Login failed: ' + data.message);
-                }
-            } catch (error) {
-                console.error('Error during login:', error);
-                alert('Error during login. Please try again.');
-            }
-        }
-        // Helper Functions
-        function getStatusColor(status) {
-            const colors = {
-                'pending': '#ffc107',
-                'booked': '#17a2b8',
-                'in_transit': '#007bff',
-                'arrived': '#fd7e14',
-                'customs_clearance': '#6f42c1',
-                'delivered': '#28a745',
-                'cancelled': '#dc3545'
-            };
-            return colors[status] || '#6c757d';
-        }
-
-        function formatStatus(status) {
-            return status.split('_').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ');
-        }
-
-        function formatDate(timestamp) {
-            return new Date(timestamp).toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // Tab Management
+        // Tab switching functionality
         function showTab(tabName) {
+            // Hide all forms
             document.querySelectorAll('.portal-form').forEach(form => {
                 form.classList.remove('active');
             });
+            
+            // Remove active class from all tabs
             document.querySelectorAll('.portal-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
+            // Show selected form and activate tab
             document.getElementById(tabName + 'Form').classList.add('active');
             event.target.classList.add('active');
         }
-
-        function showClientPortal(user) {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('portalDemo').style.display = 'block';
-            
-            // Update portal with user info
-            document.getElementById('portalDemo').innerHTML = `
-                <h3>Welcome, ${user.companyName}!</h3>
-                <p>Email: ${user.email} | Phone: ${user.phone}</p>
-                <div style="text-align: left; margin: 20px 0;">
-                    <h4>Portal Features:</h4>
-                    <ul>
-                        <li>📊 Live shipment tracking</li>
-                        <li>📑 Document management</li>
-                        <li>💰 Invoice and payment history</li>
-                        <li>⚡ Quick quote requests</li>
-                        <li>💬 Direct messaging with your agent</li>
-                    </ul>
-                </div>
-                <button class="btn" onclick="logout()" style="background: #dc3545;">Logout</button>
-            `;
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            document.getElementById('portalDemo').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'block';
-            document.querySelectorAll('.portal-form').forEach(form => form.reset());
-        }
-
-        function resetPortal() {
-            logout();
-        }
-
-        // Smooth scrolling
+        
+        // Form submission handlers
+        document.getElementById('login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login functionality would be implemented here');
+            // In a real application, you would send the login data to your backend
+        });
+        
+        document.getElementById('register').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Registration functionality would be implemented here');
+            // In a real application, you would send the registration data to your backend
+        });
+        
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -867,420 +534,6 @@
                 }
             });
         });
-
-        // Header scroll effect
-                // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });  // ← Add this closing brace and parenthesis
-
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will contact you within 24 hours.');
-            this.reset();
-        });
-
-        // Form validation and enhancement
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            const user = localStorage.getItem('user');
-            if (user) {
-                showClientPortal(JSON.parse(user));
-            }
-
-            // Add input validation
-            const numberInputs = document.querySelectorAll('input[type="number"]');
-            numberInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    if (this.value < 0) {
-                        this.value = 0;
-                    }
-                });
-            });
-
-            // Add enter key support for tracking
-            document.getElementById('trackingNumber').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    trackShipment();
-                }
-            });
-
-            // Initialize with demo data
-            initializeDemoData();
-        });
-
-        // Initialize with some demo data for better UX
-        function initializeDemoData() {
-            // Pre-fill tracking number with example
-            const trackingInput = document.getElementById('trackingNumber');
-            if (trackingInput && !trackingInput.value) {
-                trackingInput.placeholder = 'e.g., LCL-2024-001, LCL-2024-002';
-            }
-
-            // Add sample tracking numbers for testing
-            if (window.location.hash === '#tracking' && !trackingInput.value) {
-                trackingInput.value = 'LCL-2024-001';
-            }
-        }
-
-        // Enhanced quote calculation with local fallback
-        async function calculateQuoteWithFallback(formData) {
-            try {
-                const response = await fetch(`${API_BASE}/quotes/calculate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.warn('API unavailable, using local calculation:', error);
-                return calculateQuoteLocally(formData);
-            }
-        }
-
-        // Local quote calculation fallback
-        function calculateQuoteLocally(formData) {
-            const serviceMultipliers = {
-                'clearing': 1,
-                'sea_freight': 2.5,
-                'air_freight': 4,
-                'full_logistics': 3
-            };
-            
-            const cargoMultipliers = {
-                'general': 1,
-                'construction': 1.2,
-                'vehicles': 1.5,
-                'perishable': 1.8,
-                'hazardous': 2.2
-            };
-
-            const baseCost = (serviceMultipliers[formData.serviceType] || 1) * 500;
-            const weightCost = formData.weight * 2.5;
-            const volumeCost = formData.volume * 150;
-            const cargoMultiplier = cargoMultipliers[formData.cargoType] || 1;
-            
-            const calculatedAmount = (baseCost + weightCost + volumeCost) * cargoMultiplier;
-
-            return {
-                success: true,
-                data: {
-                    calculatedAmount: calculatedAmount.toFixed(2),
-                    currency: "USD",
-                    quoteId: `LOCAL-QUOTE-${Date.now()}`,
-                    breakdown: {
-                        baseFee: baseCost.toFixed(2),
-                        weightCharge: weightCost.toFixed(2),
-                        volumeCharge: volumeCost.toFixed(2),
-                        cargoSurcharge: cargoMultiplier
-                    },
-                    note: "Calculated locally - connect to backend for accurate pricing"
-                }
-            };
-        }
-
-        // Enhanced tracking with local fallback
-        async function trackShipmentWithFallback(trackingNumber) {
-            try {
-                const response = await fetch(`${API_BASE}/shipments/track/${trackingNumber}`);
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.warn('API unavailable, using demo tracking data:', error);
-                return getDemoTrackingData(trackingNumber);
-            }
-        }
-
-        // Demo tracking data fallback
-        function getDemoTrackingData(trackingNumber) {
-            const demoData = {
-                'LCL-2024-001': {
-                    trackingNumber: 'LCL-2024-001',
-                    status: 'customs_clearance',
-                    description: 'Construction Materials',
-                    client: 'Liberia Construction Co.',
-                    origin: {
-                        country: 'China',
-                        port: 'Port of Shanghai'
-                    },
-                    destination: {
-                        country: 'Liberia',
-                        port: 'Freeport of Monrovia'
-                    },
-                    timeline: [
-                        {
-                            status: 'customs_clearance',
-                            description: 'Customs processing at Freeport of Monrovia',
-                            location: 'Monrovia, Liberia',
-                            timestamp: new Date().toISOString()
-                        },
-                        {
-                            status: 'arrived',
-                            description: 'Vessel arrived at port',
-                            location: 'Freeport of Monrovia',
-                            timestamp: new Date(Date.now() - 86400000).toISOString()
-                        },
-                        {
-                            status: 'in_transit',
-                            description: 'Departed origin port',
-                            location: 'Port of Shanghai',
-                            timestamp: new Date(Date.now() - 604800000).toISOString()
-                        }
-                    ],
-                    estimatedArrival: new Date(Date.now() + 259200000).toISOString(),
-                    carrier: {
-                        name: 'Maersk Line',
-                        vessel: 'MAERSK MONROVIA'
-                    }
-                },
-                'LCL-2024-002': {
-                    trackingNumber: 'LCL-2024-002',
-                    status: 'in_transit',
-                    description: 'Mining Equipment',
-                    client: 'Liberia Mining Corp.',
-                    origin: {
-                        country: 'USA',
-                        port: 'Port of Baltimore'
-                    },
-                    destination: {
-                        country: 'Liberia',
-                        port: 'Freeport of Monrovia'
-                    },
-                    timeline: [
-                        {
-                            status: 'in_transit',
-                            description: 'Vessel in Atlantic Ocean',
-                            location: 'Mid-Atlantic',
-                            timestamp: new Date(Date.now() - 172800000).toISOString()
-                        },
-                        {
-                            status: 'booked',
-                            description: 'Booking confirmed and documentation completed',
-                            location: 'Port of Baltimore',
-                            timestamp: new Date(Date.now() - 2592000000).toISOString()
-                        }
-                    ],
-                    estimatedArrival: new Date(Date.now() + 604800000).toISOString(),
-                    carrier: {
-                        name: 'MSC',
-                        vessel: 'MSC LIBERIA'
-                    }
-                }
-            };
-
-            return {
-                success: true,
-                data: demoData[trackingNumber] || {
-                    trackingNumber: trackingNumber,
-                    status: 'pending',
-                    description: 'Shipment information not found',
-                    timeline: [],
-                    note: 'Demo data - connect to backend for real tracking'
-                }
-            };
-        }
-
-        // Update the main tracking function to use fallback
-        async function trackShipment() {
-            const trackingNumber = document.getElementById('trackingNumber').value.trim();
-            const resultsDiv = document.getElementById('trackingResults');
-            
-            if (!trackingNumber) {
-                alert('Please enter a tracking number');
-                return;
-            }
-
-            try {
-                // Show loading state
-                const trackBtn = document.querySelector('.tracking-input .btn');
-                const originalText = trackBtn.innerHTML;
-                trackBtn.innerHTML = '<div class="loading"></div> Tracking...';
-                trackBtn.disabled = true;
-
-                const data = await trackShipmentWithFallback(trackingNumber);
-                
-                // Restore button
-                trackBtn.innerHTML = originalText;
-                trackBtn.disabled = false;
-                
-                if (data.success) {
-                    displayTrackingResults(data.data);
-                    resultsDiv.style.display = 'block';
-                    resultsDiv.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    alert('Shipment not found. Please check your tracking number.');
-                }
-            } catch (error) {
-                console.error('Error tracking shipment:', error);
-                alert('Error tracking shipment. Please try again.');
-                
-                // Restore button in case of error
-                const trackBtn = document.querySelector('.tracking-input .btn');
-                trackBtn.innerHTML = 'Track Shipment';
-                trackBtn.disabled = false;
-            }
-        }
-
-        // Update the main quote function to use fallback
-        async function calculateQuote() {
-            const formData = {
-                serviceType: document.getElementById('serviceType').value,
-                origin: document.getElementById('origin').value,
-                cargoType: document.getElementById('cargoType').value,
-                weight: parseFloat(document.getElementById('weight').value),
-                volume: parseFloat(document.getElementById('volume').value),
-                value: parseFloat(document.getElementById('value').value),
-                description: document.getElementById('cargoDescription').value
-            };
-
-            // Validate required fields
-            if (!formData.serviceType || !formData.origin || !formData.cargoType || 
-                !formData.weight || !formData.volume) {
-                alert('Please fill all required fields');
-                return;
-            }
-
-            try {
-                const data = await calculateQuoteWithFallback(formData);
-                
-                if (data.success) {
-                    displayQuoteResult(data.data);
-                } else {
-                    alert('Error calculating quote: ' + data.message);
-                }
-            } catch (error) {
-                console.error('Error calculating quote:', error);
-                alert('Error calculating quote. Please try again.');
-            }
-        }
-
-        // Enhanced quote result display
-        function displayQuoteResult(quoteData) {
-            const calculatedAmount = document.getElementById('calculatedAmount');
-            const quoteResult = document.getElementById('quoteResult');
-            
-            calculatedAmount.textContent = quoteData.calculatedAmount;
-            
-            // Add breakdown if available
-            if (quoteData.breakdown) {
-                let breakdownHtml = `
-                    <div class="quote-breakdown">
-                        <div class="breakdown-item">
-                            <div class="detail-label">Base Fee</div>
-                            <div class="detail-value">$${quoteData.breakdown.baseFee}</div>
-                        </div>
-                        <div class="breakdown-item">
-                            <div class="detail-label">Weight Charge</div>
-                            <div class="detail-value">$${quoteData.breakdown.weightCharge}</div>
-                        </div>
-                        <div class="breakdown-item">
-                            <div class="detail-label">Volume Charge</div>
-                            <div class="detail-value">$${quoteData.breakdown.volumeCharge}</div>
-                        </div>
-                `;
-                
-                if (quoteData.breakdown.cargoSurcharge && quoteData.breakdown.cargoSurcharge > 1) {
-                    breakdownHtml += `
-                        <div class="breakdown-item">
-                            <div class="detail-label">Cargo Surcharge</div>
-                            <div class="detail-value">${quoteData.breakdown.cargoSurcharge}x</div>
-                        </div>
-                    `;
-                }
-                
-                breakdownHtml += '</div>';
-                
-                // Insert breakdown before the note
-                const noteElement = quoteResult.querySelector('p');
-                if (noteElement) {
-                    noteElement.insertAdjacentHTML('beforebegin', breakdownHtml);
-                }
-            }
-            
-            // Add note if present
-            if (quoteData.note) {
-                const existingNote = quoteResult.querySelector('.quote-note');
-                if (!existingNote) {
-                    const noteElement = document.createElement('p');
-                    noteElement.className = 'quote-note';
-                    noteElement.style.fontSize = '0.9em';
-                    noteElement.style.color = '#6c757d';
-                    noteElement.style.marginTop = '10px';
-                    noteElement.textContent = quoteData.note;
-                    quoteResult.appendChild(noteElement);
-                }
-            }
-            
-            quoteResult.style.display = 'block';
-            quoteResult.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Mobile menu toggle (for future responsive enhancement)
-        function toggleMobileMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-
-        // Add responsive navigation for mobile
-        function initMobileNavigation() {
-            const nav = document.querySelector('nav');
-            const navLinks = document.querySelector('.nav-links');
-            
-            // Create mobile menu button
-            const mobileMenuBtn = document.createElement('button');
-            mobileMenuBtn.className = 'mobile-menu-btn';
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            mobileMenuBtn.style.display = 'none';
-            mobileMenuBtn.onclick = toggleMobileMenu;
-            
-            nav.appendChild(mobileMenuBtn);
-            
-            // Check screen size and toggle mobile menu
-            function checkScreenSize() {
-                if (window.innerWidth <= 768) {
-                    mobileMenuBtn.style.display = 'block';
-                    navLinks.style.display = 'none';
-                } else {
-                    mobileMenuBtn.style.display = 'none';
-                    navLinks.style.display = 'flex';
-                }
-            }
-            
-            window.addEventListener('resize', checkScreenSize);
-            checkScreenSize(); // Initial check
-        }
-
-        // Initialize mobile navigation when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            initMobileNavigation();
-        });
-
-        // Export functionality for future use
-        window.LiberiaClearLogistics = {
-            trackShipment,
-            calculateQuote,
-            clientLogin,
-            clientRegister,
-            logout,
-            showTab
-        };
-
-        console.log('LiberiaClearLogistics frontend initialized successfully!');
-        console.log('Backend API URL:', API_BASE);
     </script>
 </body>
 </html>
