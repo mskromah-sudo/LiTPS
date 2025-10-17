@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liberia Clearing & Forwarding Services | Your Company Name</title>
     <meta name="description" content="Professional customs clearing, freight forwarding, and logistics services in Liberia. Experts in LRA regulations and Port of Monrovia procedures.">
+    
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tawk.to Live Chat Script -->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/YOUR_WIDGET_ID_HERE/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    
     <style>
         /* Basic CSS Reset */
         * {
@@ -78,6 +95,7 @@
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li {
@@ -88,6 +106,23 @@
             text-decoration: none;
             color: #333;
             font-weight: 500;
+        }
+
+        /* Social Media Links in Header */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-left: 20px;
+        }
+
+        .social-links a {
+            color: #0056b3;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #003d82;
         }
 
         /* Hero Section */
@@ -173,16 +208,36 @@
         }
 
         .contact-form input,
-        .contact-form textarea {
+        .contact-form textarea,
+        .contact-form select {
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-family: inherit;
         }
 
         .contact-form textarea {
             height: 150px;
+        }
+
+        /* Footer Social Links */
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: #0056b3;
         }
 
         /* Footer */
@@ -191,6 +246,37 @@
             color: white;
             text-align: center;
             padding: 40px 0;
+        }
+
+        /* Custom Live Chat Button (Backup) */
+        .live-chat-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+
+        .live-chat-btn:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        /* WhatsApp specific style */
+        .whatsapp-chat {
+            background: #25d366;
         }
 
         /* Responsive Design */
@@ -205,6 +291,19 @@
             
             h2 {
                 font-size: 2em;
+            }
+
+            .social-links {
+                margin-left: 10px;
+                gap: 10px;
+            }
+
+            .live-chat-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3em;
             }
         }
     </style>
@@ -221,6 +320,22 @@
                     <li><a href="#documents">Required Documents</a></li>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    
+                    <!-- Social Media Links in Navigation -->
+                    <div class="social-links">
+                        <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://twitter.com/yourcompany" target="_blank" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://wa.me/231XXXXXXXXX" target="_blank" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </ul>
             </nav>
         </div>
@@ -342,6 +457,25 @@
                     <p><strong>WhatsApp:</strong> +231-XX-XXX-XXXX</p>
                     <p><strong>Email:</strong> info@liberiaclearlogistics.com</p>
                     <p><strong>Business Hours:</strong> Mon-Fri: 8:00 AM - 6:00 PM</p>
+                    
+                    <!-- Social Media in Contact Section -->
+                    <div style="margin-top: 30px;">
+                        <h4>Follow Us</h4>
+                        <div class="social-links" style="justify-content: flex-start; margin-top: 15px;">
+                            <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://twitter.com/yourcompany" target="_blank" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://wa.me/231XXXXXXXXX" target="_blank" title="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="contact-form">
                     <h3>Request a Quote</h3>
@@ -349,8 +483,8 @@
                         <input type="text" placeholder="Your Name" required>
                         <input type="email" placeholder="Your Email" required>
                         <input type="tel" placeholder="Your Phone" required>
-                        <select style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px;">
-                            <option>Select Service</option>
+                        <select required>
+                            <option value="">Select Service</option>
                             <option>Customs Clearing</option>
                             <option>Freight Forwarding</option>
                             <option>Warehousing</option>
@@ -367,12 +501,39 @@
     <!-- Footer -->
     <footer>
         <div class="container">
+            <!-- Social Media Links in Footer -->
+            <div class="footer-social">
+                <a href="https://facebook.com/yourcompany" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://linkedin.com/company/yourcompany" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com/yourcompany" target="_blank" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/yourcompany" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/231776712230" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            
             <p>&copy; 2024 LiberiaClearLogistics. All rights reserved. | Professional Clearing & Forwarding Services in Liberia</p>
             <p style="margin-top: 10px; font-size: 0.9em;">
                 Compliant with Liberia Revenue Authority (LRA) and National Port Authority regulations
             </p>
         </div>
     </footer>
+
+    <!-- Live Chat Button (WhatsApp) -->
+    <a href="https://wa.me/231776712230?text=Hello!%20I%20need%20information%20about%20your%20clearing%20services" 
+       class="live-chat-btn whatsapp-chat" 
+       target="_blank"
+       title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <!-- Basic JavaScript for Form -->
     <script>
@@ -391,6 +552,14 @@
                 });
             });
         });
+
+        // Simple live chat function (backup)
+        function openLiveChat() {
+            const phone = "231776712230"; // Your Liberia phone number
+            const message = "Hello! I need information about your clearing services";
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
     </script>
 </body>
 </html>
