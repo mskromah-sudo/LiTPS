@@ -920,6 +920,56 @@
             </div>
         </div>
     </section>
+<!-- Add this section to your existing HTML -->
+<section id="payments" class="payments">
+    <div class="container">
+        <h2>Payment & Invoices</h2>
+        <div class="payment-container">
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <h3>Pay Your Invoice</h3>
+                <div class="method-cards">
+                    <div class="method-card" onclick="selectPaymentMethod('stripe')">
+                        <i class="fab fa-cc-stripe"></i>
+                        <h4>Credit/Debit Card</h4>
+                        <p>Pay securely with Stripe</p>
+                    </div>
+                    <div class="method-card" onclick="selectPaymentMethod('paypal')">
+                        <i class="fab fa-paypal"></i>
+                        <h4>PayPal</h4>
+                        <p>Pay with your PayPal account</p>
+                    </div>
+                    <div class="method-card" onclick="selectPaymentMethod('bank')">
+                        <i class="fas fa-university"></i>
+                        <h4>Bank Transfer</h4>
+                        <p>Direct bank transfer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoice List -->
+            <div class="invoice-list">
+                <h3>Your Invoices</h3>
+                <div id="invoicesContainer">
+                    <!-- Invoices will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div id="paymentForm" class="payment-form" style="display: none;">
+                <h3 id="paymentTitle">Complete Payment</h3>
+                <div id="stripeForm">
+                    <!-- Stripe Elements will be inserted here -->
+                    <div id="card-element"></div>
+                    <button id="stripe-submit" class="btn">Pay Now</button>
+                </div>
+                <div id="paypalForm" style="display: none;">
+                    <div id="paypal-button-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Client Login Portal -->
     <section id="client-portal" class="login-portal">
