@@ -1,244 +1,138 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Load environment variables
+// Load env vars
 dotenv.config();
+
+// ES6 module fix for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Import routes
+import authRoutes from './routes/auth.js';
+import shipmentRoutes from './routes/shipments.js';
+import quoteRoutes from './routes/quotes.js';
+import adminRoutes from './routes/admin.js';
+import emailRoutes from './routes/email.js';
 
 const app = express();
 
-// Middleware
-app.use(express.json());
+// Body parser middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+
+// Enable CORS
 app.use(cors());
 
-// Test route
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Mount routers
+app.use('/api/auth', authRoutes);
+app.use('/api/shipments', shipmentRoutes);
+app.use('/api/quotes', quoteRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/email', emailRoutes);
+
+// Home route
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Liberia Clearing & Forwarding API is running! 🚀',
-    version: '1.0.0',
+    message: 'Liberia Clearing & Forwarding API is running...',
+    version: '2.0.0',
+    database: 'MongoDB Connected',
     timestamp: new Date().toISOString()
   });
 });
 
-// Health check
-app.get('/health', (req, res) => {
+// Health check with DB status
+app.get('/health', async (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  
   res.json({
     success: true,
-    status: 'healthy',
-    database: 'mock_mode',
+    message: 'API Health Check',
+    database: dbStatus,
+    uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });
 });
 
-// Mock Tracking System
-app.get('/api/shipments/track/:trackingNumber', (req, res) => {
-  const { trackingNumber } = req.params;
-  
-  const mockShipment = {
-    trackingNumber: trackingNumber,
-    status: "customs_clearance",
-    description: "Construction Materials",
-    client: "Liberia Construction Co.",
-    origin: {
-      country: "China",
-      port: "Port of Shanghai"
-    },
-    destination: {
-      country: "Liberia", 
-      port: "Freeport of Monrovia"
-    },
-    timeline: [
-      {
-        status: "customs_clearance",
-        description: "Customs processing at Freeport of Monrovia",
-        location: "Monrovia, Liberia",
-        timestamp: new Date().toISOString()
-      },
-      {
-        status: "arrived",
-        description: "Vessel arrived at port",
-        location: "Freeport of Monrovia",
-        timestamp: new Date(Date.now() - 86400000).toISOString()
-      },
-      {
-        status: "in_transit",
-        description: "Departed origin port",
-        location: "Port of Shanghai",
-        timestamp: new Date(Date.now() - 604800000).toISOString()
-      }
-    ],
-    estimatedArrival: new Date(Date.now() + 259200000).toISOString(), // 3 days from now
-    carrier: "Maersk Line"
-  };
-
-  res.json({
-    success: true,
-    data: mockShipment
-  });
-});
-
-// Mock Quote Calculator
-app.post('/api/quotes/calculate', (req, res) => {
-  const { serviceType, origin, cargoType, weight, volume, value, description } = req.body;
-
-  // Input validation
-  if (!serviceType || !origin || !cargoType || !weight || !volume) {
-    return res.status(400).json({
-      success: false,
-      message: 'Please provide all required fields: serviceType, origin, cargoType, weight, volume'
-    });
-  }
-
-  // Calculation logic
-  const serviceMultipliers = {
-    'clearing': 1,
-    'sea_freight': 2.5,
-    'air_freight': 4,
-    'full_logistics': 3
-  };
-  
-  const cargoMultipliers = {
-    'general': 1,
-    'construction': 1.2,
-    'vehicles': 1.5,
-    'perishable': 1.8,
-    'hazardous': 2.2
-  };
-
-  const baseCost = (serviceMultipliers[serviceType] || 1) * 500;
-  const weightCost = parseFloat(weight) * 2.5;
-  const volumeCost = parseFloat(volume) * 150;
-  const cargoMultiplier = cargoMultipliers[cargoType] || 1;
-  
-  const calculatedAmount = (baseCost + weightCost + volumeCost) * cargoMultiplier;
-
-  res.json({
-    success: true,
-    data: {
-      calculatedAmount: calculatedAmount.toFixed(2),
-      currency: "USD",
-      quoteId: `QUOTE-${Date.now()}`,
-      breakdown: {
-        baseFee: baseCost,
-        weightCharge: weightCost,
-        volumeCharge: volumeCost,
-        cargoSurcharge: cargoMultiplier
-      },
-      validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
-    }
-  });
-});
-
-// Mock Detailed Quote Request
-app.post('/api/quotes/request-detailed', (req, res) => {
-  const { quoteId, companyName, email, phone, additionalNotes } = req.body;
-
-  if (!quoteId || !companyName || !email || !phone) {
-    return res.status(400).json({
-      success: false,
-      message: 'Please provide quoteId, companyName, email, and phone'
-    });
-  }
-
-  res.json({
-    success: true,
-    message: 'Detailed quote request submitted successfully! Our team will contact you within 2 hours.',
-    data: {
-      quoteId,
-      companyName,
-      email,
-      phone,
-      submittedAt: new Date().toISOString(),
-      reference: `REF-${Date.now()}`
-    }
-  });
-});
-
-// Mock Client Registration
-app.post('/api/auth/register', (req, res) => {
-  const { companyName, email, phone, password, contactPerson } = req.body;
-
-  if (!companyName || !email || !phone || !password) {
-    return res.status(400).json({
-      success: false,
-      message: 'Please provide companyName, email, phone, and password'
-    });
-  }
-
-  res.json({
-    success: true,
-    message: 'Registration successful!',
-    user: {
-      id: `USER-${Date.now()}`,
-      companyName,
-      email,
-      phone,
-      contactPerson,
-      role: 'client'
-    },
-    token: 'mock_jwt_token_here'
-  });
-});
-
-// Mock Client Login
-app.post('/api/auth/login', (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({
-      success: false,
-      message: 'Please provide email and password'
-    });
-  }
-
-  // Mock authentication - in real app, check against database
-  res.json({
-    success: true,
-    message: 'Login successful!',
-    user: {
-      id: 'USER-12345',
-      companyName: 'Demo Construction Company',
-      email: email,
-      phone: '+231-XX-XXX-XXXX',
-      role: 'client'
-    },
-    token: 'mock_jwt_token_here'
-  });
-});
-
-// Handle 404 routes
-app.use('*', (req, res) => {
+// Handle unhandled routes
+app.all('*', (req, res) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`
   });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : {}
+// Database connection with retry logic
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`📊 Database: ${conn.connection.name}`);
+    
+    // Create indexes for better performance
+    await mongoose.connection.collection('shipments').createIndex({ trackingNumber: 1 }, { unique: true });
+    await mongoose.connection.collection('users').createIndex({ email: 1 }, { unique: true });
+    await mongoose.connection.collection('quotes').createIndex({ createdAt: -1 });
+    
+    return true;
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    
+    if (process.env.NODE_ENV === 'production') {
+      // In production, exit if DB connection fails
+      process.exit(1);
+    }
+    
+    return false;
+  }
+};
+
+// Connect to MongoDB and start server
+const startServer = async () => {
+  const dbConnected = await connectDB();
+  
+  if (!dbConnected && process.env.NODE_ENV === 'production') {
+    console.log('❌ Failed to connect to database. Exiting...');
+    process.exit(1);
+  }
+
+  const PORT = process.env.PORT || 5000;
+  
+  app.listen(PORT, () => {
+    console.log('\n' + '='.repeat(50));
+    console.log('🚀 LiberiaClearLogistics Backend Started!');
+    console.log(`📍 Port: ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📊 Database: ${dbConnected ? 'Connected ✅' : 'Disconnected ❌'}`);
+    console.log(`🕒 Started: ${new Date().toLocaleString()}`);
+    console.log('='.repeat(50) + '\n');
   });
+};
+
+// Start the server
+startServer();
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  await mongoose.connection.close();
+  process.exit(0);
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log('✅ Liberia Clearing & Forwarding API Server Started!');
-  console.log(`📍 Local: http://localhost:${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🚀 API is ready to use!`);
-  console.log('');
-  console.log('📋 Available Endpoints:');
-  console.log('   GET  /                            - API status');
-  console.log('   GET  /health                      - Health check');
-  console.log('   GET  /api/shipments/track/:id     - Track shipment');
-  console.log('   POST /api/quotes/calculate        - Get instant quote');
-  console.log('   POST /api/quotes/request-detailed - Request detailed quote');
-  console.log('   POST /api/auth/register           - Client registration');
-  console.log('   POST /api/auth/login              - Client login');
+process.on('SIGINT', async () => {
+  console.log('SIGINT received, shutting down gracefully');
+  await mongoose.connection.close();
+  process.exit(0);
 });
