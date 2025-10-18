@@ -18,6 +18,10 @@ import shipmentRoutes from './routes/shipments.js';
 import quoteRoutes from './routes/quotes.js';
 import adminRoutes from './routes/admin.js';
 import emailRoutes from './routes/email.js';
+import paymentRoutes from './routes/payments.js';
+import paymentReportRoutes from './routes/paymentReports.js';
+import smsRoutes from './routes/sms.js';
+import { initializeSMSSchedulers } from './services/smsScheduler.js';
 
 const app = express();
 
@@ -37,6 +41,24 @@ app.use('/api/shipments', shipmentRoutes);
 app.use('/api/quotes', quoteRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/email', emailRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/payment-reports', paymentReportRoutes);
+app.use('/api/sms', smsRoutes);
+
+// Initialize SMS schedulers after server starts
+app.listen(PORT, () => {
+  console.log('\n' + '='.repeat(50));
+  console.log('🚀 LiberiaClearLogistics Backend Started!');
+  console.log(`📍 Port: ${PORT}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📊 Database: ${dbConnected ? 'Connected ✅' : 'Disconnected ❌'}`);
+  console.log(`📱 SMS Service: ${process.env.SMS_ENABLED === 'true' ? 'Enabled ✅' : 'Disabled ❌'}`);
+  console.log(`🕒 Started: ${new Date().toLocaleString()}`);
+  console.log('='.repeat(50) + '\n');
+
+  // Initialize SMS schedulers
+  initializeSMSSchedulers();
+});
 
 // Home route
 app.get('/', (req, res) => {

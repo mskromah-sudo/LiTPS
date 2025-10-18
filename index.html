@@ -920,6 +920,103 @@
             </div>
         </div>
     </section>
+    <!-- SMS Dashboard Section -->
+<section id="sms-dashboard" class="sms-dashboard" style="display: none;">
+    <div class="container">
+        <h2>SMS Management</h2>
+        
+        <div class="sms-stats">
+            <div class="stat-card">
+                <h3>SMS Balance</h3>
+                <div class="balance-amount" id="smsBalance">Loading...</div>
+                <button onclick="checkSMSBalance()" class="btn btn-sm">Refresh</button>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Messages Sent</h3>
+                <div class="stat-number" id="sentCount">0</div>
+                <span>This Month</span>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Success Rate</h3>
+                <div class="stat-number" id="successRate">0%</div>
+                <span>Delivery Rate</span>
+            </div>
+        </div>
+
+        <div class="sms-actions">
+            <h3>Quick Actions</h3>
+            <div class="action-buttons">
+                <button onclick="showBulkSMSModal()" class="btn btn-primary">
+                    <i class="fas fa-bullhorn"></i> Send Bulk SMS
+                </button>
+                <button onclick="showUrgentAlertModal()" class="btn btn-warning">
+                    <i class="fas fa-exclamation-triangle"></i> Send Urgent Alert
+                </button>
+                <button onclick="loadSMSLogs()" class="btn btn-info">
+                    <i class="fas fa-history"></i> View SMS Logs
+                </button>
+            </div>
+        </div>
+
+        <!-- Bulk SMS Modal -->
+        <div id="bulkSMSModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Send Bulk SMS</h3>
+                <form id="bulkSMSForm">
+                    <div class="form-group">
+                        <label>Recipients:</label>
+                        <select id="clientGroup" multiple style="width: 100%; height: 150px;">
+                            <!-- Clients will be loaded here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message:</label>
+                        <textarea id="bulkMessage" rows="4" maxlength="160" 
+                                  placeholder="Type your message here (160 characters max)"></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span>/160 characters
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Template:</label>
+                        <select id="smsTemplate">
+                            <option value="CUSTOM">Custom Message</option>
+                            <option value="SHIPMENT_UPDATE">Shipment Update</option>
+                            <option value="PAYMENT_REMINDER">Payment Reminder</option>
+                            <option value="URGENT_ALERT">Urgent Alert</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Messages</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- SMS Logs Table -->
+        <div class="sms-logs">
+            <h3>Recent SMS Activity</h3>
+            <div class="table-responsive">
+                <table id="smsLogsTable">
+                    <thead>
+                        <tr>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Gateway</th>
+                            <th>Cost</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- SMS logs will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Add this section to your existing HTML -->
 <section id="payments" class="payments">
     <div class="container">
@@ -1706,7 +1803,113 @@
         document.addEventListener('DOMContentLoaded', function() {
             initMobileNavigation();
         });
+// SMS Management Functions
+async function checkSMSBalance() {
+    try {
+        const response = await fetch('/api/sms/balance', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            document.getElementById('smsBalance').textContent = 
+                `${data.data.balance} ${data.data.currency}`;
+        }
+    } catch (error) {
+        console.error('Error checking SMS balance:', error);
+    }
+}
 
+async function sendBulkSMS(clientIds, message, templateType) {
+    try {
+        const response = await fetch('/api/sms/bulk', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                clientIds,
+                message,
+                templateType
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert(`Bulk SMS sent successfully to ${data.data.sentCount} recipients`);
+            return true;
+        } else {
+            alert('Failed to send bulk SMS: ' + data.message);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error sending bulk SMS:', error);
+        alert('Error sending bulk SMS');
+        return false;
+    }
+}
+
+async function loadSMSLogs() {
+    try {
+        const response = await fetch('/api/sms/logs', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            displaySMSLogs(data.data);
+        }
+    } catch (error) {
+        console.error('Error loading SMS logs:', error);
+    }
+}
+
+function displaySMSLogs(logs) {
+    const tbody = document.querySelector('#smsLogsTable tbody');
+    tbody.innerHTML = logs.map(log => `
+        <tr>
+            <td>${log.phoneNumber}</td>
+            <td title="${log.message}">${log.message.substring(0, 50)}${log.message.length > 50 ? '...' : ''}</td>
+            <td>
+                <span class="status-badge status-${log.status}">
+                    ${log.status}
+                </span>
+            </td>
+            <td>${log.gateway}</td>
+            <td>$${log.cost?.toFixed(2) || '0.00'}</td>
+            <td>${new Date(log.createdAt).toLocaleDateString()}</td>
+        </tr>
+    `).join('');
+}
+
+// Character counter for SMS messages
+document.getElementById('bulkMessage')?.addEventListener('input', function() {
+    const count = this.value.length;
+    document.getElementById('charCount').textContent = count;
+    
+    if (count > 160) {
+        this.value = this.value.substring(0, 160);
+        document.getElementById('charCount').textContent = 160;
+    }
+});
+
+// Initialize SMS dashboard when admin logs in
+function initializeSMSDashboard() {
+    checkSMSBalance();
+    loadSMSLogs();
+    
+    // Set up periodic refresh every 5 minutes
+    setInterval(() => {
+        checkSMSBalance();
+        loadSMSLogs();
+    }, 300000);
+}
         // Export functionality for future use
         window.LiberiaClearLogistics = {
             trackShipment,

@@ -10,6 +10,7 @@ import PDFDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { sendPaymentSMS } from '../services/smsNotificationService.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -449,8 +450,17 @@ const handlePaymentIntentSucceeded = async (paymentIntent) => {
       { status: 'paid', paidAt: new Date() }
     );
 
-    // Send receipt
+    // Send receipt email
     await sendPaymentReceipt(payment);
+
+    // Send SMS notification
+    if (process.env.SMS_ENABLED === 'true') {
+      try {
+        await sendPaymentSMS(payment._id, 'received');
+      } catch (smsError) {
+        console.log('Payment SMS notification failed:', smsError);
+      }
+    }
 
     console.log(`✅ Payment ${payment.invoiceNumber} completed successfully`);
   }

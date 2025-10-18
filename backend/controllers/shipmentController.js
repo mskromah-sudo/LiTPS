@@ -1,4 +1,5 @@
 const Shipment = require('..models/Shipment');
+import { sendShipmentUpdateSMS } from '../services/smsNotificationService.js';
 
 // @desc    Get all shipments for client
 // @route   GET /api/shipments
@@ -140,6 +141,66 @@ exports.updateStatus = async (req, res) => {
     });
 
     await shipment.save();
+
+    res.status(200).json({
+      success: true,
+      data: shipment
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+// Add to the updateStatus function in shipmentController.js
+export const updateStatus = async (req, res) => {
+  try {
+    const { status, description, location, notifyClient } = req.body;
+
+    const shipment = await Shipment.findById(req.params.id).populate('client');
+
+    if (!shipment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Shipment not found'
+      });
+    }
+
+    // Update status
+    shipment.status = status;
+
+    // Add to timeline
+    shipment.timeline.push({
+      status,
+      description: description || `Status updated to ${status}`,
+      location: location || 'Freeport of Monrovia',
+      timestamp: new Date()
+    });
+
+    await shipment.save();
+
+    // Send SMS notification if enabled and requested
+    if (notifyClient && shipment.client && process.env.SMS_ENABLED === 'true') {
+      try {
+        await sendShipmentUpdateSMS(shipment._id, status);
+      } catch (smsError) {
+        console.log('SMS notification failed:', smsError);
+        // Don't fail the request if SMS fails
+      }
+    }
+
+    // Existing email notification code...
+    if (notifyClient && shipment.client) {
+      try {
+        await sendEmail({
+          to: shipment.client.email,
+          ...emailTemplates.shipmentUpdate(shipment, shipment.client)
+        });
+      } catch (emailError) {
+        console.log('Notification email failed:', emailError);
+      }
+    }
 
     res.status(200).json({
       success: true,
