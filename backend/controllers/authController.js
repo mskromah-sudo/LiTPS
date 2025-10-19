@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+const User = (await import('../models/User.js')).default;
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/emailService.js';
