@@ -13,12 +13,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Import routes
-import authRoutes from './routes/auth.js';
+import authRoutes from './backend/routes/auth.js';
 import shipmentRoutes from './backend/routes/shipments.js';
 import quoteRoutes from './backend/routes/quotes.js';
 import adminRoutes from './backend/routes/admin.js';
 import emailRoutes from './backend/routes/email.js';
-import paymentRoutes from './backend/routes/payments.js';
+import paymentRoutes from './backend/routes/payment.js'; // Fixed filename
 import paymentReportRoutes from './backend/routes/paymentReports.js';
 import smsRoutes from './backend/routes/sms.js';
 import { initializeSMSSchedulers } from './backend/services/smsScheduler.js';
@@ -36,6 +36,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
+// Use routes - example
 app.use('/api/auth', authRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/quotes', quoteRoutes);
