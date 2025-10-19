@@ -95,4 +95,4 @@ shipmentSchema.pre('save', async function(next) {
   next();
 });
 
-module.exports = mongoose.model('Shipment', shipmentSchema);
+export default mongoose.model('Quote', quoteSchema)

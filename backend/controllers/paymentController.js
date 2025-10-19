@@ -3,7 +3,7 @@ import Invoice from '../models/Invoice.js';
 import User from '../models/User.js';
 import Shipment from '../models/Shipment.js';
 import Quote from '../models/Quote.js';
-import stripe from '../config/stripe.js';
+import {stripe} from '../config/stripe.js';
 import { getPayPalAccessToken, paypalConfig } from '../config/paypal.js';
 import { sendEmail, emailTemplates } from '../utils/emailService.js';
 import PDFDocument from 'pdfkit';

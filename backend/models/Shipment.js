@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const shipmentSchema = new mongoose.Schema({
   trackingNumber: {
@@ -95,4 +95,4 @@ shipmentSchema.pre('save', async function(next) {
   next();
 });
 
-module.exports = mongoose.model('Shipment', shipmentSchema);
+export default mongoose.model('Shipment', shipmentSchema);
