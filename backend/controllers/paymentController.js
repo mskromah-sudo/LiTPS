@@ -1,6 +1,6 @@
 import Payment from '../models/Payment.js';
 import Invoice from '../models/Invoice.js';
-import User from '../models/User.js';
+import User from '../models/user.js';
 import Shipment from '../models/Shipment.js';
 import Quote from '../models/Quote.js';
 import stripe from '../config/stripe.js';
