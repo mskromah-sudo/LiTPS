@@ -8,6 +8,10 @@ import { fileURLToPath } from 'url';
 // Load env vars
 dotenv.config();
 
+// Debug: Check if env vars are loading
+console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+console.log('Environment:', process.env.NODE_ENV);
+
 // ES6 module fix for __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +22,7 @@ import shipmentRoutes from './backend/routes/shipments.js';
 import quoteRoutes from './backend/routes/quotes.js';
 import adminRoutes from './backend/routes/admin.js';
 import emailRoutes from './backend/routes/email.js';
-import paymentRoutes from './backend/routes/payment.js'; // Fixed filename
+import paymentRoutes from './backend/routes/payment.js';
 import paymentReportRoutes from './backend/routes/paymentReports.js';
 import smsRoutes from './backend/routes/sms.js';
 import { initializeSMSSchedulers } from './backend/services/smsScheduler.js';
@@ -36,7 +40,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
-// Use routes - example
 app.use('/api/auth', authRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/quotes', quoteRoutes);
@@ -45,19 +48,6 @@ app.use('/api/email', emailRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/payment-reports', paymentReportRoutes);
 app.use('/api/sms', smsRoutes);
-
-// Initialize SMS schedulers after server starts
-app.listen(PORT, () => {
-  console.log(`📍 Port: ${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`📊 Database: ${dbConnected ? 'Connected ✅' : 'Disconnected ❌'}`);
-  console.log(`📱 SMS Service: ${process.env.SMS_ENABLED === 'true' ? 'Enabled ✅' : 'Disabled ❌'}`);
-  console.log(`🕒 Started: ${new Date().toLocaleString()}`);
-  console.log('='.repeat(50) + '\n');
-
-  // Initialize SMS schedulers
-  initializeSMSSchedulers();
-});
 
 // Home route
 app.get('/', (req, res) => {
@@ -94,25 +84,19 @@ app.all('*', (req, res) => {
 // Database connection with retry logic
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    console.log('MongoDB URI: Loaded');
+    
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    // Remove the options object entirely
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database: ${conn.connection.name}`);
-    
-    // Create indexes for better performance
-    await mongoose.connection.collection('shipments').createIndex({ trackingNumber: 1 }, { unique: true });
-    await mongoose.connection.collection('users').createIndex({ email: 1 }, { unique: true });
-    await mongoose.connection.collection('quotes').createIndex({ createdAt: -1 });
     
     return true;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
     
     if (process.env.NODE_ENV === 'production') {
-      // In production, exit if DB connection fails
       process.exit(1);
     }
     
@@ -120,8 +104,8 @@ const connectDB = async () => {
   }
 };
 
-// Connect to MongoDB and start server
-const startServer = async () => {
+// Start the server
+(async () => {
   const dbConnected = await connectDB();
   
   if (!dbConnected && process.env.NODE_ENV === 'production') {
@@ -137,13 +121,14 @@ const startServer = async () => {
     console.log(`📍 Port: ${PORT}`);
     console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`📊 Database: ${dbConnected ? 'Connected ✅' : 'Disconnected ❌'}`);
+    console.log(`📱 SMS Service: ${process.env.SMS_ENABLED === 'true' ? 'Enabled ✅' : 'Disabled ❌'}`);
     console.log(`🕒 Started: ${new Date().toLocaleString()}`);
     console.log('='.repeat(50) + '\n');
-  });
-};
 
-// Start the server
-startServer();
+    // Initialize SMS schedulers
+    initializeSMSSchedulers();
+  });
+})();
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {

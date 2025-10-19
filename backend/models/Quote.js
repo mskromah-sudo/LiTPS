@@ -1,98 +1,41 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const shipmentSchema = new mongoose.Schema({
-  trackingNumber: {
-    type: String,
-    required: true,
-    unique: true
+const quoteSchema = new mongoose.Schema({
+  // Add your actual schema fields here
+  shipment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shipment',
+    required: true
   },
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  description: {
-    type: String,
+  amount: {
+    type: Number,
     required: true
   },
-  origin: {
-    country: String,
-    port: String,
-    address: String
-  },
-  destination: {
-    country: String,
-    port: String,
-    address: String
-  },
-  cargoDetails: {
+  currency: {
     type: String,
-    weight: Number,
-    volume: Number,
-    value: Number,
-    containers: Number
+    default: 'USD'
   },
-  carrier: {
-    name: String,
-    vessel: String,
-    bookingReference: String
+  breakdown: {
+    freight: Number,
+    customs: Number,
+    handling: Number,
+    insurance: Number,
+    other: Number
   },
   status: {
     type: String,
-    enum: ['pending', 'booked', 'in_transit', 'arrived', 'customs_clearance', 'delivered', 'cancelled'],
-    default: 'pending'
+    enum: ['draft', 'sent', 'accepted', 'rejected'],
+    default: 'draft'
   },
-  timeline: [{
-    status: String,
-    description: String,
-    location: String,
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  documents: [{
-    name: String,
-    fileUrl: String,
-    uploadedAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  quotes: [{
-    amount: Number,
-    currency: {
-      type: String,
-      default: 'USD'
-    },
-    breakdown: {
-      freight: Number,
-      customs: Number,
-      handling: Number,
-      insurance: Number,
-      other: Number
-    },
-    validUntil: Date,
-    status: {
-      type: String,
-      enum: ['pending', 'accepted', 'rejected'],
-      default: 'pending'
-    }
-  }],
-  estimatedArrival: Date,
-  actualArrival: Date,
+  validUntil: Date,
   notes: String
 }, {
   timestamps: true
 });
 
-// Generate tracking number before saving
-shipmentSchema.pre('save', async function(next) {
-  if (!this.trackingNumber) {
-    const count = await mongoose.model('Shipment').countDocuments();
-    this.trackingNumber = `LCL-${new Date().getFullYear()}-${(count + 1).toString().padStart(4, '0')}`;
-  }
-  next();
-});
-
-export default mongoose.model('Quote', quoteSchema)
+export default mongoose.model('Quote', quoteSchema);
