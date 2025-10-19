@@ -13,15 +13,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Import routes
-import authRoutes from './routes/auth.js';
-import shipmentRoutes from './routes/shipments.js';
-import quoteRoutes from './routes/quotes.js';
-import adminRoutes from './routes/admin.js';
+import authRoutes from './backend/routes/auth.js';
+import shipmentRoutes from './backend/routes/shipments.js';
+import quoteRoutes from './backend/routes/quotes.js';
+import adminRoutes from './backend/routes/admin.js';
 import emailRoutes from './routes/email.js';
 import paymentRoutes from './routes/payments.js';
-import paymentReportRoutes from './routes/paymentReports.js';
-import smsRoutes from './routes/sms.js';
-import { initializeSMSSchedulers } from './services/smsScheduler.js';
+import paymentReportRoutes from './backend/routes/paymentReports.js';
+import smsRoutes from './backend/routes/sms.js';
+import { initializeSMSSchedulers } from './backend/services/smsScheduler.js';
 
 const app = express();
 
@@ -47,8 +47,6 @@ app.use('/api/sms', smsRoutes);
 
 // Initialize SMS schedulers after server starts
 app.listen(PORT, () => {
-  console.log('\n' + '='.repeat(50));
-  console.log('🚀 LiberiaClearLogistics Backend Started!');
   console.log(`📍 Port: ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`📊 Database: ${dbConnected ? 'Connected ✅' : 'Disconnected ❌'}`);
