@@ -18,7 +18,7 @@ import shipmentRoutes from './backend/routes/shipments.js';
 import quoteRoutes from './backend/routes/quotes.js';
 import adminRoutes from './backend/routes/admin.js';
 import emailRoutes from './backend/routes/email.js';
-import paymentRoutes from './routes/payments.js';
+import paymentRoutes from './backend/routes/payments.js';
 import paymentReportRoutes from './backend/routes/paymentReports.js';
 import smsRoutes from './backend/routes/sms.js';
 import { initializeSMSSchedulers } from './backend/services/smsScheduler.js';
