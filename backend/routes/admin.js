@@ -1,6 +1,6 @@
 import express from 'express';
 import { protect, authorize } from '../middleware/auth.js';
-import User from '../models/user.js';
+import User from '../models/User.js';
 import Shipment from '../models/Shipment.js';
 import Quote from '../models/Quote.js';
 import { sendEmail, emailTemplates } from '../utils/emailService.js';
